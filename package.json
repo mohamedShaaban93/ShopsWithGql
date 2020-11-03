@@ -11,12 +11,20 @@
   },
   "dependencies": {
     "@apollo/client": "^3.2.5",
+    "@react-native-community/cameraroll": "^4.0.1",
+    "@types/apollo-upload-client": "^14.1.0",
+    "@types/yup": "^0.29.9",
+    "apollo-link-error": "^1.1.13",
+    "apollo-upload-client": "^14.1.2",
+    "formik": "^2.2.1",
     "graphql": "^15.4.0",
     "react": "16.13.1",
     "react-native": "0.63.3",
+    "react-native-camera-roll-picker": "^2.0.0",
     "react-native-navigation": "^7.2.0",
     "react-native-paper": "^4.2.0",
-    "react-native-vector-icons": "^7.1.0"
+    "react-native-vector-icons": "^7.1.0",
+    "yup": "^0.29.3"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",

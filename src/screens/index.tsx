@@ -5,6 +5,8 @@ import { Posts } from './posts/Posts';
 import { AddPost } from './addPost/AddPost';
 import { SignUp } from './signup/SignUp';
 import { Login } from './login/Login';
+import PhotoSelection from './photoSelection/PhotoSelection';
+// import { createUploadLink } from 'apollo-upload-client'
 
 
 
@@ -12,19 +14,28 @@ interface Screens {
   name: string;
   Screen: any;
 }
-const screens:Screens[] = [
+const screens: Screens[] = [
   { name: 'posts', Screen: Posts },
   { name: 'addPost', Screen: AddPost },
   { name: 'signup', Screen: SignUp },
-  { name: 'login', Screen: Login}
+  { name: 'login', Screen: Login },
+  { name: 'photoSelection', Screen: PhotoSelection },
 ];
 
 
 export const cache = new InMemoryCache();
 
 const client = new ApolloClient({
-  uri: 'https://api.graphqlplaceholder.com/',
-  cache
+  uri: 'https://ionian-cotton-aerosteon.glitch.me/graphql',
+  headers: {
+    accept: "application/json",
+    contentType: "application/json"
+  },
+  // link: createUploadLink({
+  //   uri: "https://ionian-cotton-aerosteon.glitch.me/graphql",
+  // }),
+  cache,
+
 });
 
 /// create Screen
