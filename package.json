@@ -11,9 +11,13 @@
   },
   "dependencies": {
     "@apollo/client": "^3.2.5",
+    "@types/apollo-upload-client": "^14.1.0",
+    "apollo-link-error": "^1.1.13",
+    "apollo-upload-client": "^14.1.2",
     "graphql": "^15.4.0",
     "react": "16.13.1",
     "react-native": "0.63.3",
+    "react-native-image-picker": "^2.3.4",
     "react-native-navigation": "^7.2.0",
     "react-native-paper": "^4.2.0",
     "react-native-vector-icons": "^7.1.0"

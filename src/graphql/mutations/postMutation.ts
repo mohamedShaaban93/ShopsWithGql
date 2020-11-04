@@ -1,4 +1,4 @@
-import {gql} from '@apollo/client';
+import { gql } from '@apollo/client';
 
 export const DELETE_POST = gql`
   mutation deletePost($postId: ID!) {
@@ -18,4 +18,14 @@ export const ADD_POST = gql`
       }
     }
   }
+`;
+
+export const Sign_Up = gql`
+  mutation signUp($profileImg: Upload! , $name:String! , $email:String! ) {
+  signUp(input: {email: $email, name: $name, password: "123456789", profileImg: $profileImg}) {
+    user {
+      profileImg
+    }
+  }
+}
 `;
