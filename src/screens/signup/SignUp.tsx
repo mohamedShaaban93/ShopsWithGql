@@ -9,7 +9,7 @@ import { styles } from './styles';
 import { Formik } from 'formik';
 import { buildValidationSchema } from './validation';
 import { SINGLE_UPLOAD } from '../../graphql/mutations/SingleUpload';
-import {ReactNativeFile} from 'apollo-upload-client'
+import { ReactNativeFile } from 'apollo-upload-client'
 import { SIGN_UP } from '../../graphql/mutations/SignupMutaion';
 
 
@@ -32,42 +32,40 @@ type submitValue = {
 
 export const SignUp: React.FC<Props> = (props: Props) => {
   const [uri, setUri] = useState('')
+  const [loading, setloading] = useState(false)
 
 
-  const file = new ReactNativeFile({
-    uri,
-    type: 'image/*',
-    name: 'profile.jpg',
-  })
+
 
 
   const onSubmit = async (values: MyFormValues, { setSubmitting, setFieldError, setFieldValue }: submitValue) => {
-    setSubmitting(true)
-    console.log('====================================');
-    console.log(values.name);
-    console.log(values.email);
-    console.log(values.password);
-    console.log( new ReactNativeFile({
+    const file = new ReactNativeFile({
       uri,
       type: 'image/*',
       name: 'profile.jpg',
-    }));
-    console.log('====================================');
-    
+    })
+    setloading(true)
     signUpHandler({
       variables: {
         name: values.name,
         email: values.email,
         password: values.password,
         profileImg: file
-      }
+      },
 
     }).then((data) => {
-      console.log(data);
-      
-      setSubmitting(false)
+      console.log('dataaaaaaaa',data);
     }
-    ).catch((error)=> console.log('rrrrrrrrrrrrrrrrrr',error)
+    ).catch((error) => {
+      if (JSON.stringify(error.graphQLErrors[0].message).includes('Email Already Exists')) {
+        setFieldError('email', 'Existing email');
+        
+      } else {
+        console.log('ppppppppppppppppppppppp',error);
+
+      }
+    }
+    ).finally(() => setloading(false)
     )
   };
 
@@ -76,7 +74,7 @@ export const SignUp: React.FC<Props> = (props: Props) => {
 
   const [signUpHandler, { data }] = useMutation(SIGN_UP, {
     onCompleted: (data) => {
-      console.log(data);
+      console.log('dddddddddddddddddddddddddddd', data);
 
     }
   });
@@ -179,7 +177,7 @@ export const SignUp: React.FC<Props> = (props: Props) => {
                 }}
               >Add Image</Button>
               <View style={styles.addEmployeeContainer}>
-                {!isSubmitting ? (
+                {!loading ? (
 
                   <Button
                     mode="contained"

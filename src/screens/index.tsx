@@ -1,4 +1,4 @@
-import { ApolloClient, ApolloProvider, FieldPolicy, InMemoryCache } from '@apollo/client';
+import { ApolloClient, ApolloProvider, ApolloLink, InMemoryCache, HttpLink } from '@apollo/client';
 import React from 'react';
 import { Navigation } from 'react-native-navigation';
 import { Posts } from './posts/Posts';
@@ -6,7 +6,8 @@ import { AddPost } from './addPost/AddPost';
 import { SignUp } from './signup/SignUp';
 import { Login } from './login/Login';
 import PhotoSelection from './photoSelection/PhotoSelection';
-// import { createUploadLink } from 'apollo-upload-client'
+import { createUploadLink } from 'apollo-upload-client';
+import { onError } from 'apollo-link-error'
 
 
 
@@ -24,16 +25,17 @@ const screens: Screens[] = [
 
 
 export const cache = new InMemoryCache();
+const errorLink = onError(({ graphQLErrors }) => {
+  if (graphQLErrors) graphQLErrors.map(({ message }) => console.log(message))
+})
+const link = ApolloLink.from([
+  errorLink,
+  createUploadLink({uri: "https://ionian-cotton-aerosteon.glitch.me/graphql"}),
+  new HttpLink({ uri: "https://ionian-cotton-aerosteon.glitch.me/graphql" }),
+])
 
 const client = new ApolloClient({
-  uri: 'https://ionian-cotton-aerosteon.glitch.me/graphql',
-  headers: {
-    accept: "application/json",
-    contentType: "application/json"
-  },
-  // link: createUploadLink({
-  //   uri: "https://ionian-cotton-aerosteon.glitch.me/graphql",
-  // }),
+  link,
   cache,
 
 });
